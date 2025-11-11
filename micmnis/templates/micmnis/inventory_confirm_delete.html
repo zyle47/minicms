@@ -1,0 +1,18 @@
+{% extends "micmnis/base.html" %}
+{% block title %}Delete {{ item.name }}{% endblock %}
+{% block content %}
+
+<div class="card border-danger shadow-sm">
+  <div class="card-body text-center">
+    <h2 class="text-danger">⚠️ Delete Confirmation</h2>
+    <p>Are you sure you want to permanently delete <strong>{{ item.name }}</strong>?</p>
+
+    <form method="POST" class="mt-3">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">🗑️ Confirm Delete</button>
+      <a href="{% url 'inventory_detail' item.pk %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

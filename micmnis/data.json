@@ -1,0 +1,66 @@
+{
+  "apothecary_inventory": [
+    {
+      "id": "HERB001",
+      "name": "Chamomile Flowers",
+      "type": "Herb",
+      "form": "Dried",
+      "uses": ["Calming tea", "Sleep aid", "Digestive relief"],
+      "preparation": "Steep 1 tbsp in hot water for 10 minutes",
+      "price_per_oz_usd": 2.5,
+      "stock_oz": 48,
+      "origin": "Egypt"
+    },
+    {
+      "id": "TINC001",
+      "name": "Echinacea Tincture",
+      "type": "Tincture",
+      "form": "Liquid",
+      "uses": ["Immune support", "Cold prevention"],
+      "ingredients": [
+        "Echinacea purpurea root",
+        "Organic grain alcohol (40%)",
+        "Distilled water"
+      ],
+      "dosage": "Take 30 drops in water 2–3 times daily",
+      "volume_ml": 50,
+      "price_usd": 12.0,
+      "origin": "USA"
+    },
+    {
+      "id": "BALM001",
+      "name": "Arnica Healing Balm",
+      "type": "Balm",
+      "form": "Salve",
+      "uses": ["Bruises", "Muscle soreness", "Joint pain"],
+      "ingredients": [
+        "Arnica montana extract",
+        "Beeswax",
+        "Shea butter",
+        "Olive oil",
+        "Lavender essential oil"
+      ],
+      "container_size_g": 30,
+      "price_usd": 8.5,
+      "application": "Apply small amount to affected area 2–3 times daily",
+      "origin": "Germany"
+    },
+    {
+      "id": "OIL002",
+      "name": "Peppermint Essential Oil",
+      "type": "Essential Oil",
+      "form": "Oil",
+      "uses": ["Headache relief", "Congestion", "Energy boost"],
+      "ingredients": ["100% Pure Mentha piperita oil"],
+      "volume_ml": 15,
+      "price_usd": 6.0,
+      "safety_notes": [
+        "Do not ingest",
+        "Dilute before applying to skin",
+        "Avoid contact with eyes"
+      ],
+      "origin": "India"
+    }
+  ],
+  "last_updated": "2025-11-11T00:00:00Z"
+}

@@ -1,0 +1,14 @@
+{% extends "micmnis/base.html" %}
+{% block title %}Add New Ingredient{% endblock %}
+
+{% block content %}
+<h2>Add New Ingredient</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Save Ingredient</button>
+</form>
+
+<a href="{% url 'ingredient_list' %}" class="btn btn-secondary">Back to List</a>
+{% endblock %}

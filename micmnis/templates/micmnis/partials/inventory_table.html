@@ -1,0 +1,43 @@
+<div class="table-responsive">
+  <table class="table table-striped table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th><a href="#" class="sort-link" data-sort="name">Name</a></th>
+        <th><a href="#" class="sort-link" data-sort="type">Type</a></th>
+        <th><a href="#" class="sort-link" data-sort="origin__country">Origin</a></th>
+        <th><a href="#" class="sort-link" data-sort="uses__name">Uses</a></th>
+        <th><a href="#" class="sort-link" data-sort="price_usd">Price</a></th>
+        {% if user.is_superuser %}
+        <th>Actions</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td><a href="{% url 'inventory_detail' item.pk %}">{{ item.name }}</a></td>
+        <td>{{ item.get_type_display }}</td>
+        <td>{{ item.origin }}</td>
+        <td>
+          {% for use in item.uses.all %}
+            <span class="badge bg-info text-dark">{{ use.name }}</span>
+          {% empty %}
+            <span class="text-muted">—</span>
+          {% endfor %}
+        </td>
+        <td>${{ item.price_usd }}</td>
+        {% if user.is_superuser %}
+        <td>
+          <a href="{% url 'inventory_update' item.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+          <a href="{% url 'inventory_delete' item.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+        </td>
+        {% endif %}
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6" class="text-center text-muted">No matching items found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

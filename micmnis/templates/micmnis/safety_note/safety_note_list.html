@@ -1,0 +1,12 @@
+{% extends "micmnis/base.html" %}
+{% block title %}List of Safety notes{% endblock %}
+
+{% block content %}
+<h2>Safety notes</h2>
+<a href="{% url 'create_safety_note' %}" class="btn btn-primary">Add New Use</a>
+<ul>
+    {% for safety_note in safety_notes %}
+        <li>{{ safety_note.text }} - <a href="{% url 'edit_safety_note' safety_note.pk %}">Edit</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

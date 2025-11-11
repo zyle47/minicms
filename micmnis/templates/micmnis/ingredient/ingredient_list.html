@@ -1,0 +1,12 @@
+{% extends "micmnis/base.html" %}
+{% block title %}List of Ingredient{% endblock %}
+
+{% block content %}
+<h2>Ingredients</h2>
+<a href="{% url 'create_ingredient' %}" class="btn btn-primary">Add New Ingredient</a>
+<ul>
+    {% for ingredient in ingredients %}
+        <li>{{ ingredient.name }} - <a href="{% url 'edit_ingredient' ingredient.pk %}">Edit</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

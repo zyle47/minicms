@@ -1,0 +1,113 @@
+{% extends "micmnis/base.html" %}
+{% block title %}Inventory Dashboard{% endblock %}
+{% block content %}
+
+<h2>Apothecary Inventory</h2>
+
+<!-- Search + Filter Bar -->
+<form method="GET" class="row gy-2 gx-3 align-items-end mb-4">
+    <div class="col-md-3">
+        <label class="form-label">Search</label>
+        <input type="text" name="q" class="form-control" placeholder="Search by name or code" value="{{ query }}">
+    </div>
+
+    <div class="col-md-2">
+        <label class="form-label">Type</label>
+        <select name="type" class="form-select">
+            <option value="">All</option>
+            {% for key, val in types %}
+            <option value="{{ key }}" {% if type_filter == key %}selected{% endif %}>{{ val }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <label class="form-label">Origin</label>
+        <select name="origin" class="form-select">
+            <option value="">All</option>
+            {% for origin in origins %}
+            <option value="{{ origin.country }}" {% if origin_filter == origin.country %}selected{% endif %}>
+                {{ origin.country }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <label class="form-label">Use</label>
+        <select name="use" class="form-select">
+            <option value="">All</option>
+            {% for use in uses %}
+            <option value="{{ use.name }}" {% if use_filter == use.name %}selected{% endif %}>
+                {{ use.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-1">
+        <a href="{% url 'inventory_list' %}" class="btn rounded-pill btn-outline-secondary w-100">Reset</a>
+    </div>
+</form>
+
+<!-- Results -->
+<div class="table-responsive">
+    <div id="inventory-table">
+        {% include "micmnis/partials/inventory_table.html" %}
+    </div>
+</div>
+{% if user.is_superuser %}
+<div class="row mt-3">
+    <div class="col-3">
+        <a href="{% url 'inventory_create' %}" class="btn rounded-pill btn-success w-100"><i class="fas fa-plus"></i>&nbsp;<i class="fas fa-pills"></i>&nbsp;&nbsp;&nbsp;Add New Item</a>
+    </div>
+    <div class="col-3">
+        <a href="{% url 'use_list' %}" class="btn rounded-pill btn-info w-100"><i class="fas fa-flask"></i>&nbsp;&nbsp;&nbsp;Manage Uses</a>
+    </div>
+    <div class="col-3">
+        <a href="{% url 'ingredient_list' %}" class="btn rounded-pill btn-primary w-100"><i class="fas fa-utensils"></i>&nbsp;&nbsp;&nbsp;Ingredients</a>
+    </div>
+    <div class="col-3">
+        <a href="{% url 'safety_note_list' %}" class="btn rounded-pill btn-warning w-100"><i class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;&nbsp;Safety Notes</a>
+    </div>
+</div>
+
+
+{% endif %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        const tableDiv = document.getElementById("inventory-table");
+        let currentSort = "name";
+
+        // Handle filter form change (live update)
+        form.addEventListener("input", function (e) {
+            fetchResults();
+        });
+
+        // Handle sort link clicks
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("sort-link")) {
+                e.preventDefault();
+                const sortField = e.target.dataset.sort;
+                currentSort = currentSort === sortField ? "-" + sortField : sortField;
+                fetchResults();
+            }
+        });
+
+        function fetchResults() {
+            const params = new URLSearchParams(new FormData(form));
+            params.append("sort", currentSort);
+
+            fetch(`/ajax/search/?${params.toString()}`)
+                .then(response => response.json())
+                .then(data => {
+                    tableDiv.innerHTML = data.html;
+                })
+                .catch(err => console.error("AJAX error:", err));
+        }
+    });
+</script>
+
+{% endblock %}

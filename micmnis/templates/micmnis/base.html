@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Micmnis Apothecary{% endblock %}</title>
+
+    <!-- ✅ Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #fafaf8;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding: 1rem 0;
+            text-align: center;
+            color: #777;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="mb-4">
+            <h1 class="text-center text-success">🌿 Micmnis Apothecary</h1>
+            <p class="text-center text-muted">Manage your natural remedies inventory</p>
+            <hr>
+        </header>
+
+        {% block content %}{% endblock %}
+
+        <footer>
+            <hr>
+            {% if user.is_superuser %}
+            <p>💡 Tip: Click an item name to view details or edit information. Keep your inventory accurate!</p>
+            {% endif %}
+            <p>&copy; {{ now|default:"2025" }} Micmnis&reg;</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</body>
+
+</html>

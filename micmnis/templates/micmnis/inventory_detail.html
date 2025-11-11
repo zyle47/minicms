@@ -1,0 +1,77 @@
+{% extends "micmnis/base.html" %}
+{% block title %}{{ item.name }}{% endblock %}
+{% block content %}
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h2 class="card-title">{{ item.name }}</h2>
+        <p class="text-muted mb-3">
+            {{ item.get_type_display }}{% if item.form %} — {{ item.form }}{% endif %}
+        </p>
+
+        <ul class="list-group mb-4">
+            {% if item.origin %}
+            <li class="list-group-item"><strong>Origin:</strong> {{ item.origin }}</li>
+            {% endif %}
+
+            {% if item.price_usd %}
+            <li class="list-group-item"><strong>Price:</strong> ${{ item.price_usd }}</li>
+            {% endif %}
+
+            {% if item.preparation %}
+            <li class="list-group-item"><strong>Preparation:</strong> {{ item.preparation }}</li>
+            {% endif %}
+
+            {% if item.dosage %}
+            <li class="list-group-item"><strong>Dosage:</strong> {{ item.dosage }}</li>
+            {% endif %}
+
+            {% if item.application %}
+            <li class="list-group-item"><strong>Application:</strong> {{ item.application }}</li>
+            {% endif %}
+
+            <li class="list-group-item">
+                <strong>Uses:</strong>
+                {% for u in item.uses.all %}
+                    <span class="badge bg-success">{{ u.name }}</span>
+                {% empty %}
+                    <span class="text-muted">None listed</span>
+                {% endfor %}
+            </li>
+
+            <li class="list-group-item">
+                <strong>Ingredients:</strong>
+                {% for ing in item.ingredients.all %}
+                    <span class="badge bg-info text-dark">{{ ing.name }}</span>
+                {% empty %}
+                    <span class="text-muted">None listed</span>
+                {% endfor %}
+            </li>
+
+            <li class="list-group-item">
+                <strong>Safety Notes:</strong>
+                {% for note in item.safety_notes.all %}
+                    <span class="badge bg-danger">{{ note.text }}</span>
+                {% empty %}
+                    <span class="text-muted">None</span>
+                {% endfor %}
+            </li>
+        </ul>
+
+        <div class="d-flex gap-2">
+            {% if user.is_superuser %}
+            <a href="{% url 'inventory_update' item.pk %}" class="btn btn-primary">
+                ✏️ Edit
+            </a>
+            <a href="{% url 'inventory_delete' item.pk %}" class="btn btn-danger">
+                🗑️ Delete
+            </a>
+            {% endif %}
+            <a href="{% url 'inventory_list' %}" class="btn btn-secondary">
+                ⬅️ Back
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
