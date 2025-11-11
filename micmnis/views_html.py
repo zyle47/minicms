@@ -1,11 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import ApothecaryItem, Origin, Use
+from .models import ApothecaryItem, Origin, Use, Ingredient, SafetyNote
 from django.db.models import Q
-from .forms import ApothecaryItemForm  # if you separated your form earlier
+from .forms import ApothecaryItemForm, UseForm, IngredientForm, SafetyNoteForm  # if you separated your form earlier
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
-
 # ----------------------------
 # CRUD Views
 # ----------------------------
@@ -145,10 +144,6 @@ def ajax_inventory_search(request):
     html = render_to_string("micmnis/partials/inventory_table.html", {"items": items.distinct()})
     return JsonResponse({"html": html})
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
-from .models import Use, Ingredient, SafetyNote
-from .forms import UseForm, IngredientForm, SafetyNoteForm
 
 # View to create a new Use
 def create_use(request):
@@ -219,9 +214,7 @@ def edit_safety_note(request, pk):
         form = SafetyNoteForm(instance=safety_note)
     return render(request, 'micmnis/safety_note/edit_safety_note.html', {'form': form, 'safety_note': safety_note})
 
-
-# views.py
-
+# List view for m2m models
 def use_list(request):
     uses = Use.objects.all()
     return render(request, 'micmnis/use/use_list.html', {'uses': uses})
