@@ -9,13 +9,11 @@ coverage/
 *.log
 .idea/
 *.sqlite3
-*.bak
-*.swp
-*.tmp
-*.iml
-*.class
-*.jar
-*.war
+sqlite3
+/sqlite3
+/sqlite3.db
+*.db
+
 
 .venv
 .venv/
